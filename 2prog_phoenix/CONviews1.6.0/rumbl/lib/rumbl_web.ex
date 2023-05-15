@@ -23,6 +23,8 @@ defmodule RumblWeb do
 
       import Plug.Conn
       import RumblWeb.Gettext
+      import RumblWeb.Auth, only: [authenticate_user: 2]
+      #Para importar esto que antes estaba en user_controller y poder usarlo en controllers
       alias RumblWeb.Router.Helpers, as: Routes
     end
   end
@@ -66,6 +68,8 @@ defmodule RumblWeb do
       import Plug.Conn
       import Phoenix.Controller
       import Phoenix.LiveView.Router
+      import RumblWeb.Auth, only: [authenticate_user: 2]
+      #Para poder usarlo en router
     end
   end
 

@@ -8,6 +8,7 @@ defmodule RumblWeb.Router do
     plug :put_root_layout, {RumblWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug RumblWeb.Auth#Agregamos el module plug de autenticación
   end
 
   pipeline :api do
@@ -17,9 +18,36 @@ defmodule RumblWeb.Router do
   scope "/", RumblWeb do
     pipe_through :browser
 
-    get "/users", UserController, :index
-    get "/users/:id", UserController, :show
     get "/", PageController, :index
+    resources "/users", UserController, only: [:index, :show, :new, :create]
+    # resources es para CRUD operatoins ~
+    # get "/users", UserController, :index
+    # get "/users/:id/edit", UserController, :edit
+    # get "/users/new", UserController, :new
+    # get "/users/:id", UserController, :show
+    # post "/users", UserController, :create
+    # patch "/users/:id", UserController, :update
+    # put "/users/:id", UserController, :update
+    # delete "/users/:id", UserController, :delete
+    resources "/sessions", SessionController, only: [:new, :create, :delete]
+    #tres prepackaged REST routes
+    #get "/sessions/new" para mostrar new session login form
+    #post "/sessions" para log in
+    #delete "/sessions/:id" para log out
+  end
+
+  scope "/manage", RumblWeb do
+    pipe_through [:browser, :authenticate_user]
+    #Soporta lista tambien, como pipelines son tambien plugs podemos usar authenticate_user directamente aca
+
+    resources "/videos", VideoController
+    #Espectro completo de REST actions
+    #get "/videos" para listar videos
+    #get "/videos/:id" para ver video identificado por :id
+    #get "/videos/new" para mostrar interfaz para crear nuevo video
+    #post "/videos/new" para enviar formulario con nuevo video
+    #put y patch "/videos/:id/edit" para editar video
+    #delete "/videos/:id" para eliminar video identificado por :id
   end
 
   # Other scopes may use custom stacks.
