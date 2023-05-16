@@ -24,5 +24,6 @@ defmodule Rumbl.Multimedia.Video do
     #valida qué campos deben estar presentes de la lista de campos
     #user_id no es necesario porque no se hace input de este, se saca directamente de la aplicacion, de
     #el usuario logeado,
+    |> assoc_constraint(:category)
   end
 end

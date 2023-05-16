@@ -20,7 +20,7 @@ defmodule RumblWeb.Router do
 
     get "/", PageController, :index
     resources "/users", UserController, only: [:index, :show, :new, :create]
-    # resources es para CRUD operatoins ~
+    # resources es para CRUD operations ~
     # get "/users", UserController, :index
     # get "/users/:id/edit", UserController, :edit
     # get "/users/new", UserController, :new
