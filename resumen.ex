@@ -211,7 +211,7 @@ Stream.iterate(s, fun)
 Stream.cycle
 #Genera secuencia que hace ciclo sobre items del enum
 Stream.chunk(n)
-#Acuula n items antes de enviar
+#Acumula n items antes de enviar
 
 
 #Protocols-------------------------------------------------------------------------------------
