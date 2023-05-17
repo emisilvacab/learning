@@ -1,11 +1,15 @@
 defmodule Rumbl.Multimedia.Video do
   use Ecto.Schema
+
   import Ecto.Changeset
+  #Para que pk se forme por id y permalink, le ponemos la opcion autogenerate true para id
+  @primary_key {:id, Rumbl.Multimedia.Permalink, autogenerate: true}
 
   schema "videos" do
     field :description, :string
     field :title, :string
     field :url, :string
+    field :slug, :string
     #field :user_id, :id REPLACED BY:
     belongs_to :user, Rumbl.Accounts.User
     belongs_to :category, Rumbl.Multimedia.Category
@@ -25,5 +29,19 @@ defmodule Rumbl.Multimedia.Video do
     #user_id no es necesario porque no se hace input de este, se saca directamente de la aplicacion, de
     #el usuario logeado,
     |> assoc_constraint(:category)
+    |> slugify_title()
+  end
+
+  defp slugify_title(changeset) do
+    case fetch_change(changeset, :title) do
+      {:ok, new_title} -> put_change(changeset, :slug, slugify(new_title))
+      :error -> changeset
+    end
+  end
+
+  defp slugify(str) do
+    str
+    |> String.downcase()
+    |> String.replace(~r/[^\w-]+/u, "-")
   end
 end

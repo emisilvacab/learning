@@ -34,6 +34,7 @@ defmodule RumblWeb.Router do
     #get "/sessions/new" para mostrar new session login form
     #post "/sessions" para log in
     #delete "/sessions/:id" para log out
+    get "/watch/:id", WatchController, :show
   end
 
   scope "/manage", RumblWeb do
