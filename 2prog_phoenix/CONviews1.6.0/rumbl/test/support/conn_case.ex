@@ -23,6 +23,7 @@ defmodule RumblWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import RumblWeb.ConnCase
+      import Rumbl.TestHelpers
 
       alias RumblWeb.Router.Helpers, as: Routes
 
@@ -32,7 +33,13 @@ defmodule RumblWeb.ConnCase do
   end
 
   setup tags do
+    #Starts process that owns the connection and returns its pid
+    #shared if true the pool runs in the shared mode
+    # Shared mode allows a process to share its connection with any other process automatically,
+    # without relying on explicit allowances.
+    #Pero no pueden correr de forma concurrente los test por eso shared es true si no esta async
     pid = Ecto.Adapters.SQL.Sandbox.start_owner!(Rumbl.Repo, shared: not tags[:async])
+    #Para asegurar que el proceso se va a parar, termina la pool
     on_exit(fn -> Ecto.Adapters.SQL.Sandbox.stop_owner(pid) end)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end

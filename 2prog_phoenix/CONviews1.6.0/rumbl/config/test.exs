@@ -5,6 +5,7 @@ import Config
 # The MIX_TEST_PARTITION environment variable can be used
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
+config :pbkdf2_elixir, :rounds, 1
 config :rumbl, Rumbl.Repo,
   username: "postgres",
   password: "postgres",
