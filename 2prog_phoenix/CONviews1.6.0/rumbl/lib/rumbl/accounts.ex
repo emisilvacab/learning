@@ -2,6 +2,7 @@ defmodule Rumbl.Accounts do
   @moduledoc """
   The Accounts context.
   """
+  import Ecto.Query
   alias Rumbl.Repo
   alias Rumbl.Accounts.User
   #Without db
@@ -75,5 +76,9 @@ defmodule Rumbl.Accounts do
         Pbkdf2.no_user_verify()#Simula password check with variable timing, para mejorar capa de autenticación contra timming attacks
         {:error, :not_found}#User not found (user == nil)
     end
+  end
+
+  def list_users_with_ids(ids) do
+    Repo.all(from(u in User, where: u.id in ^ids))
   end
 end
