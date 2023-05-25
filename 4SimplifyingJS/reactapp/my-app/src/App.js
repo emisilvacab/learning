@@ -36,12 +36,12 @@ function logIdea() {
 export default function App() {
     return (
         <div className="App">
-            <div className="App-header">
+            {/* <div className="App-header">
                 <IdeaButton
                     message="I have an idea!"
                     handleClick={logIdea}
                 />
-            </div>
+            </div> */}
             <footer>
                 <Copyright />
                 <IdeaButton
